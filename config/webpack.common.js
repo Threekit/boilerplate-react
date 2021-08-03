@@ -1,12 +1,15 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
+const path = require('path');
 const paths = require('./paths');
 const babelConfig = require('./babel.config');
 
 module.exports = {
   // Rules of how webpack will take our files, complie & bundle them for the browser
   resolve: {
-    alias: { Threekit: paths.threekitModule },
+    alias: {
+      threekit: paths.threekitModule,
+    },
   },
   module: {
     rules: [

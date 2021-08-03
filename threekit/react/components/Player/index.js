@@ -23,7 +23,7 @@ const Player = (props) => {
   const { height, width, minHeight, children } = Object.assign(
     {
       height: '70vh',
-      minHeight: '500px',
+      minHeight: '600px',
       width: '100%',
     },
     props

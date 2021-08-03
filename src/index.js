@@ -2,11 +2,18 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import { ThreekitProvider } from '../threekit';
+import { ThreekitProvider } from 'threekit';
 
 const Project = () => {
+  const config = Object.assign(
+    {},
+    process.env.NODE_ENV === 'development'
+      ? { publishStage: 'draft' }
+      : undefined
+  );
+
   return (
-    <ThreekitProvider>
+    <ThreekitProvider config={config}>
       <App />
     </ThreekitProvider>
   );

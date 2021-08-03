@@ -1,16 +1,15 @@
 import React from 'react';
-import { components } from '../threekit';
-
-const { TwoCol, SingleProductForm, Player, Snapshot } = components;
+import { TwoCol, Form, Player } from 'threekit/components';
 
 const App = () => {
   return (
-    <TwoCol>
+    <TwoCol leftSize="auto" rightSize="400px" width="1200px">
       <div>
         <Player />
-        <Snapshot cameras={['Top', 'Front']} output="url" />
       </div>
-      <SingleProductForm />
+      <div>
+        <Form />
+      </div>
     </TwoCol>
   );
 };
