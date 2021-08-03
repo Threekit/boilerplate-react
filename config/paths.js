@@ -1,6 +1,7 @@
 const path = require('path');
 
 const appRoot = path.join(__dirname, '..');
+const threekitModule = path.join(appRoot, 'threekit');
 const appPackageJson = path.join(appRoot, 'package.json');
 const appBuild = path.join(appRoot, 'build');
 const serverBuild = path.join(appRoot, 'server-build');
@@ -15,6 +16,7 @@ const appYarnLock = path.join(appSrc, 'yarn.lock');
 const nodeModules = path.join(appSrc, 'node_modules');
 
 module.exports = {
+  threekitModule,
   appPackageJson,
   appBuild,
   serverBuild,

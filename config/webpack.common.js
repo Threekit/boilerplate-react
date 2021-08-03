@@ -5,6 +5,9 @@ const babelConfig = require('./babel.config');
 
 module.exports = {
   // Rules of how webpack will take our files, complie & bundle them for the browser
+  resolve: {
+    alias: { Threekit: paths.threekitModule },
+  },
   module: {
     rules: [
       {
