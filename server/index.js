@@ -1,11 +1,11 @@
 import express from 'express';
 import cors from 'cors';
-import path from 'path';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
 import multer from 'multer';
 import connection from '../threekit/connection';
 import api from '../threekit/api';
+import paths from '../config/paths';
 
 dotenv.config();
 
@@ -52,9 +52,9 @@ app.post('/api/snapshot', upload.single('files'), async (req, res) => {
   res.status(200).send(output);
 });
 
-app.use(express.static(path.join(__dirname, '../build')));
+app.use(express.static(paths.appBuild));
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../build', 'index.html'));
+  res.sendFile(paths.appBuild);
 });
 
 app.listen(PORT, () => console.log('listening on port: ', PORT));

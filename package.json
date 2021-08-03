@@ -8,10 +8,10 @@
     "start-storybook": "start-storybook -p 6006 -c config/storybook",
     "build-react": "node config/build",
     "build-server": "node config/build-server",
-    "build-storybook": "build-storybook -c config/storybook",
+    "build-storybook": "build-storybook -c config/storybook -o build_storybook",
     "build": "yarn build-react && yarn build-server",
-    "publish-storybook": "yarn build-storybook && gh-pages -b storybook -d storybook-static",
-    "serve": "node server-build",
+    "publish-storybook": "yarn build-storybook && gh-pages -b storybook -d build_storybook",
+    "serve": "node build_server",
     "test": "jest --runInBand --notify --config config/jest.config.js"
   },
   "dependencies": {

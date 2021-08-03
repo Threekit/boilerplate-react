@@ -14,6 +14,11 @@ module.exports = {
     path: paths.serverBuild,
     filename: 'index.js',
   },
+  resolve: {
+    alias: {
+      threekit: paths.threekitModule,
+    },
+  },
   externalsPresets: { node: true },
   node: {
     // Need this when working with express, otherwise the build fails

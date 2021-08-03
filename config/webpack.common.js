@@ -1,6 +1,5 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
-const path = require('path');
 const paths = require('./paths');
 const babelConfig = require('./babel.config');
 

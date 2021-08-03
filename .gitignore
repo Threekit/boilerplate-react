@@ -9,9 +9,9 @@
 /coverage
 
 # production
-/build
-/server-build
-/storybook-static
+/build_react
+/build_server
+/build_storybook
 
 # misc
 .DS_Store
