@@ -12,6 +12,9 @@ const useNestedConfigurator = () => {
   const attributes = useSelector(getNestedAttributes);
   const address = useSelector(getNestedAttributesAddress);
 
+  if (!address || !attributes)
+    return [undefined, undefined, undefined, undefined];
+
   const handleSelectAttribute = (address) =>
     dispatch(setNestedAttributeAddress(address));
 
