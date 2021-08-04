@@ -104,7 +104,9 @@ cd ./PROJECT_REPO
 
 **It is strongly recommended that you avoid making any changed to the code in the /threekit folder. To update the React Dev-Kit for projects in active development we recommend replacing the threekit folder with the updated version. This is only manageable if there is no project specific code in the threekit folder.**
 
-This React Development Kit follows a 'Provider' Pattern where all the React code that interacts with the Threekit API is placed inside the ThreekitProvider. Within the ThreekitProvider context all our components and hooks have complete flexibility in where and how they're used while still fully connected to the Threekit API, the 3D Player, and each other.
+The Dev-Kit follows a 'Provider' Pattern where all the React code that interacts with the Threekit API is placed inside the ThreekitProvider. Within the ThreekitProvider context all Threekit components and hooks have complete flexibility in where and how they're used while still fully connected to the Threekit API, the 3D Player, and each other.
+
+The Dev-Kit's provides 3 main family of features: Expanded **functionality**, including react-hooks, that provide direct ways to implement higher-level features, **components** built using that functionality to provide UI presentational elements for the configurator and many other features, and **tools** which allow us to add new and custom interactivity to the 3D.
 
 #### Components
 
@@ -248,7 +250,7 @@ Forms can be used to render out complete configurators as a single component.
 
 #### Form
 
-The `<Form>` component is used to render out an item's entire configurator. By default this is the configurator for the intialized item, however it can also be for an item nested as a selection in an Attribute.
+The `<Form>` component is used to render out an item's entire configurator. By default this is the configurator for the initialized item, however, it can also be for an item nested as a selection in an Attribute.
 
 ```jsx
 import { Form } from 'threekit/components';
@@ -262,9 +264,9 @@ const App = () => {
 };
 ```
 
-The form can take a prop of `attributeComponents` that allow us to specify, which component to use for an attribute or if we want to hide any attributes.
+The Form can take a prop of `attributeComponents` that allow us to specify, which component to use for an attribute or if we want to hide any attributes.
 
-By default the Form will also avoid rendering out reserved attributes. This can be controlled/overwritted by using the prop `includeReservedAttributes=false}`
+By default the Form will not render reserved attributes. This can be controlled/over-written by using the prop `includeReservedAttributes=false}`
 
 ```jsx
 import { Form } from 'threekit/components';
