@@ -4,12 +4,12 @@
 
 The **Threekit React Dev-Kit** is a feature-rich React boilerplate containing an extensive library of components, hooks, tools, functionality and deployment workflows needed to build an intuitive and engaging web experience for a Threekit Configurator. We have everything you need to get started!
 
-For **Threekit Docs**, [click here](https://docs.threekit.com/docs).
-For **Component Library**, [click here](https://threekit.github.io/react-threekit).
+- For **Threekit Docs**, [click here](https://docs.threekit.com/docs).
+- For **Component Library**, [click here](https://threekit.github.io/react-threekit).
 
-For the **Threekit Website** [click here](https://www.threekit.com/)
-For the **Threekit Platform - Preview Environment** [click here](https://preview.threekit.com/)
-For the **Threekit Platform - Admin-FTS Environment** [click here](https://admin-fts.threekit.com/)
+- For the **Threekit Website** [click here](https://www.threekit.com/)
+- For the **Threekit Platform - Preview Environment** [click here](https://preview.threekit.com/)
+- For the **Threekit Platform - Admin-FTS Environment** [click here](https://admin-fts.threekit.com/)
 
 ## Table of Contents
 
