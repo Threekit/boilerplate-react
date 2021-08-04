@@ -1,5 +1,5 @@
 import { METADATA_RESERVED } from '../constants';
-import { easeInOutCubic } from './tools-utils';
+import { easeInOutCubic, metadataKeyValueToObject } from './tools-utils';
 
 const animateItem = (config) => {
   const {
@@ -64,12 +64,12 @@ const animateItem = (config) => {
           if (!translate && !rotate) return;
 
           if (translate) {
-            try {
-              translateDelta = Object.assign(
-                { x: 0, y: 0, z: 0, duration },
-                JSON.parse(translate?.defaultValue)
-              );
-            } catch (e) {}
+            translateDelta = Object.assign(
+              { x: 0, y: 0, z: 0, duration },
+              metadataKeyValueToObject(translate?.defaultValue)
+            );
+
+            console.log(translateDelta);
 
             originalPosition[nullId] = window.threekit.player.scene.get({
               id: nullId,
@@ -78,12 +78,10 @@ const animateItem = (config) => {
             });
           }
           if (rotate) {
-            try {
-              rotateDelta = Object.assign(
-                { x: 0, y: 0, z: 0, duration },
-                JSON.parse(rotate?.defaultValue)
-              );
-            } catch (e) {}
+            rotateDelta = Object.assign(
+              { x: 0, y: 0, z: 0, duration },
+              metadataKeyValueToObject(rotate?.defaultValue)
+            );
 
             originalRotation[nullId] = window.threekit.player.scene.get({
               id: nullId,
