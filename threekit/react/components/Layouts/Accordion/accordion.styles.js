@@ -4,7 +4,7 @@ export const Wrapper = styled.div`
   height: max-content;
   border: 1px solid #d3d4d3;
   /* border-radius: 3px; */
-  width: 420px;
+  width: 100%;
   margin-bottom: 2px;
   background: #fafafa;
 

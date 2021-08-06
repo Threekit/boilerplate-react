@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
 export const ColorSwatchContent = styled.div`
-  background: white;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
