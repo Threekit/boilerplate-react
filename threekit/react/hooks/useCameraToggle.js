@@ -24,11 +24,9 @@ const useCameraToggle = (config) => {
     const selectedIdx = prepped.values.findIndex(
       (el) => el.assetId === value || el.value === value
     );
-    let nextIdx;
-    if (selectedIdx === -1) nextIdx = 0;
-    else if (selectedIdx === prepped.values.length - 1 && !!step) nextIdx = 0;
-    else if (selectedIdx === 0 && !step) nextIdx = prepped.values.length - 1;
-    else nextIdx = selectedIdx + step;
+    let nextIdx = selectedIdx + step;
+    if (nextIdx < 0) nextIdx = prepped.values.length - 1;
+    else if (nextIdx > prepped.values.length - 1) nextIdx = 0;
 
     setCamera(
       prepped.values[nextIdx]?.assetId || prepped.values[nextIdx].value
