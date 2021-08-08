@@ -62,3 +62,12 @@ export const ButtonWrapper = styled.div`
     display: ${(props) => (props.showLabel ? 'block' : 'none')};
   }
 `;
+
+export const TwinButtonWrapper = styled.div`
+  display: grid;
+  ${(props) =>
+    props.orientation === 'vertical'
+      ? 'grid-template-rows: repeat(2, max-content);'
+      : 'grid-template-columns: repeat(2, max-content);'}
+  grid-gap: 6px;
+`;

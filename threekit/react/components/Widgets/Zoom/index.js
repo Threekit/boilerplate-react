@@ -1,23 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Wrapper } from './zoom.styles';
-import { ButtonWrapper } from '../widgets.styles';
+import { ButtonWrapper, TwinButtonWrapper as Wrapper } from '../widgets.styles';
 import container from './zoomContainer';
 import { ZoomInOutlined, ZoomOutOutlined } from '../../../icons';
 import defaultClassName from '../classNames';
 
-export const Zoom = (props) => {
-  const {
-    step,
-    orientation,
-    zoomIn,
-    zoomOut,
-    className: classNameRaw,
-  } = Object.assign(
+export const ZoomOut = (props) => {
+  const { step, zoomOut, className: classNameRaw } = Object.assign(
     {
-      step: 1,
-      orientation: 'horizontal',
-      zoomIn: undefined,
+      step: -1,
       zoomOut: undefined,
     },
     props
@@ -27,26 +18,65 @@ export const Zoom = (props) => {
   if (classNameRaw?.length) className += ` ${classNameRaw}`;
 
   return (
+    <ButtonWrapper
+      className={`${className} zoom-out`}
+      onClick={() => zoomOut(step)}
+    >
+      <div>
+        <ZoomOutOutlined />
+      </div>
+    </ButtonWrapper>
+  );
+};
+
+export const ZoomIn = (props) => {
+  const { step, zoomIn, className: classNameRaw } = Object.assign(
+    {
+      step: 1,
+      zoomIn: undefined,
+    },
+    props
+  );
+
+  let className = `${defaultClassName}-zoom`;
+  if (classNameRaw?.length) className += ` ${classNameRaw}`;
+
+  return (
+    <ButtonWrapper
+      className={`${className} zoom-in`}
+      onClick={() => zoomIn(step)}
+    >
+      <div>
+        <ZoomInOutlined />
+      </div>
+    </ButtonWrapper>
+  );
+};
+
+export const ZoomComponent = (props) => {
+  const { step, orientation, className: classNameRaw } = Object.assign(
+    {
+      step: 1,
+      orientation: 'horizontal',
+    },
+    props
+  );
+
+  let className = `${defaultClassName}-zoom`;
+  if (classNameRaw?.length) className += ` ${classNameRaw}`;
+
+  return (
     <Wrapper className={className} orientation={orientation}>
-      <ButtonWrapper
-        className={`${className} zoom-in`}
-        onClick={() => zoomIn(step)}
-      >
-        <div>
-          <ZoomInOutlined />
-        </div>
-      </ButtonWrapper>
-      <ButtonWrapper
-        className={`${className} zoom-out`}
-        onClick={() => zoomOut(step)}
-      >
-        <div>
-          <ZoomOutOutlined />
-        </div>
-      </ButtonWrapper>
+      <ZoomOut {...props} step={-Math.abs(step)} />
+      <ZoomIn {...props} step={Math.abs(step)} />
     </Wrapper>
   );
 };
+
+export const Zoom = container(ZoomComponent);
+
+Zoom.ZoomOut = container(ZoomOut);
+Zoom.ZoomIn = container(ZoomIn);
 
 Zoom.propTypes = {
   /**
@@ -78,4 +108,4 @@ Zoom.defaultProps = {
   className: '',
 };
 
-export default container(Zoom);
+export default Zoom;
