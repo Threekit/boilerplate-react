@@ -7,5 +7,6 @@ export * from './Widgets';
 export * from './Layouts';
 export * from './Display';
 export * from './Forms';
+export * from './Tools';
 
 export { Player, ThreekitProvider };
