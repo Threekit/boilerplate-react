@@ -6,7 +6,7 @@ export const CLASS_NAME_PREFIX = `tk`;
 
 export const DEFAULT_SERVER_URL = `https://localhost:5000`;
 
-export const TK_CONFIG_PARAMS_KEY = 'tkConfigId';
+export const TK_SAVED_CONFIG_PARAM_KEY = 'tkConfigId';
 
 export const DEFAULT_PLAYER_CONFIG = {
   authToken: undefined,
@@ -73,7 +73,6 @@ export const METADATA_RESERVED = Object.assign(
 
 export const ATTRIBUTES_RESERVED = {
   step: '_step',
-  stepTo: '_stepTo',
   camera: '_camera',
   dimensions: '_dimensions',
 };
@@ -97,4 +96,9 @@ export const SNAPSHOT_OUTPUTS = {
   data: 'data',
   url: 'url',
   download: 'download',
+};
+
+export const DISPLAY_OPTIONS = {
+  modal: 'modal',
+  drawer: 'drawer',
 };

@@ -282,3 +282,49 @@ export const copyToClipboard = (data) => {
   document.execCommand('copy');
   document.body.removeChild(el);
 };
+
+export const findHitNode = (hitNodes, name) => {
+  if (!hitNodes.length) return undefined;
+  const hierarchy = [...hitNodes[0].hierarchy];
+  hierarchy.reverse();
+
+  return (
+    hierarchy.find((el) =>
+      typeof name === 'string' ? name === el.name : name.test(el.name)
+    ) || undefined
+  );
+};
+
+export const easeInOutCubic = (val) =>
+  val < 0.5 ? 4 * val * val * val : 1 - Math.pow(-2 * val + 2, 3) / 2;
+
+export const metadataValueToObject = (data) =>
+  data.split(',').reduce((output, keVal) => {
+    const [key, value] = keVal
+      .trim()
+      .split('=')
+      .map((el) => el.trim());
+    return Object.assign(output, { [key]: parseFloat(value) || value });
+  }, {});
+
+export const filterFormAttributes = (
+  attributes,
+  attributeComponents,
+  includeReservedAttributes
+) => {
+  if (!attributes) return {};
+  if (
+    (!attributeComponents || !Object.keys(attributeComponents).length) &&
+    includeReservedAttributes
+  )
+    return attributes;
+  return Object.values(attributes).filter((attr) => {
+    if (!attr) return false;
+    if (!includeReservedAttributes && attr?.name?.[0] === '_') return false;
+    if (attributeComponents && attr?.name in attributeComponents) {
+      if ([undefined, false].includes(attributeComponents[attr.name]))
+        return false;
+    }
+    return true;
+  });
+};

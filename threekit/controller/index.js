@@ -12,7 +12,7 @@ import {
   SNAPSHOT_FORMATS,
   SNAPSHOT_OUTPUTS,
   DEFAULT_PLAYER_CONFIG,
-  TK_CONFIG_PARAMS_KEY,
+  TK_SAVED_CONFIG_PARAM_KEY,
 } from '../constants';
 import { dataURItoBlob, getParams, objectToQueryStr } from '../utils';
 
@@ -35,7 +35,7 @@ class Controller {
     this._history = [[{}, configurator.getConfiguration()]];
     this._historyPosition = 0;
     //  Tools
-    this._toolsList = toolsList;
+    this._toolsList = toolsList || new Set([]);
     //  Nested Configurators
     this._nestedConfigurator = undefined;
     this._nestedConfiguratorAddress = undefined;
@@ -136,9 +136,6 @@ class Controller {
         threekitEnv: threekitEnvRaw,
         //  Base URL to express.js backend on which the built app is served
         serverUrl,
-        //  Language to use for the configuration experience where the
-        //  language has to be created and setup on the Threekit Platform
-        language,
         //  Additional tools to attach to the Threekit Player
         additionalTools,
       } = Object.assign(DEFAULT_PLAYER_CONFIG, config);
@@ -160,9 +157,9 @@ class Controller {
       let initialConfiguration = { ...initialConfigurationRaw };
       const params = getParams();
 
-      if (params[TK_CONFIG_PARAMS_KEY]?.length) {
+      if (params[TK_SAVED_CONFIG_PARAM_KEY]?.length) {
         const configuration = await this.getConfiguration(
-          params[TK_CONFIG_PARAMS_KEY]
+          params[TK_SAVED_CONFIG_PARAM_KEY]
         );
         if (configuration)
           initialConfiguration = Object.assign(
@@ -205,9 +202,8 @@ class Controller {
         threekitAPI.products.fetchTranslations(),
       ]);
 
-      let toolsList;
+      let toolsList = new Set([]);
       if (additionalTools?.length) {
-        toolsList = new Set([]);
         additionalTools.flat().forEach((toolFunc) => {
           const tool = toolFunc(player);
           if (toolsList.has(tool.key)) return;
@@ -227,7 +223,7 @@ class Controller {
           player,
           configurator,
           translations: translations,
-          language,
+          language: locale,
           toolsList,
           priceConfig: pricebook[0].length
             ? {
@@ -489,7 +485,7 @@ class Controller {
       if (error) resolve(undefined);
 
       const params = Object.assign(getParams(), {
-        [TK_CONFIG_PARAMS_KEY]: response.shortId,
+        [TK_SAVED_CONFIG_PARAM_KEY]: response.shortId,
       });
       const url = window.location.href.replace(window.location.search, '');
 

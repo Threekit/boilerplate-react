@@ -1,6 +1,8 @@
 import React from 'react';
 import { useAttributes, useNestedConfigurator } from '../../../hooks';
 import { Modal, Drawer } from '../../Layouts';
+import { DISPLAY_OPTIONS } from '../../../../constants';
+import { filterFormAttributes } from '../../../../utils';
 
 const attributesContainer = (WrappedComponent, props) => {
   const [attributes] = useAttributes();
@@ -9,15 +11,11 @@ const attributesContainer = (WrappedComponent, props) => {
     props
   );
 
-  const filterAttributes = Object.values(attributes || {}).filter((attr) => {
-    if (!attr) return false;
-    if (!includeReservedAttributes && attr?.name?.[0] === '_') return false;
-    if (attr?.name in attributeComponents) {
-      if ([undefined, false].includes(attributeComponents[attr.name]))
-        return false;
-    }
-    return true;
-  });
+  const filterAttributes = filterFormAttributes(
+    attributes,
+    attributeComponents,
+    includeReservedAttributes
+  );
 
   return <WrappedComponent {...props} attributes={filterAttributes} />;
 };
@@ -29,19 +27,30 @@ const nestedAttributesContainer = (WrappedComponent, props) => {
     setNestedAttributeAddress,
   ] = useNestedConfigurator();
 
+  const { includeReservedAttributes, attributeComponents } = Object.assign(
+    { includeReservedAttributes: false, attributeComponents: {} },
+    props
+  );
+
   const DisplayComponent =
-    props.display === 'drawer'
+    props.display === DISPLAY_OPTIONS.drawer
       ? Drawer
-      : props.display === 'modal'
+      : props.display === DISPLAY_OPTIONS.modal
       ? Modal
       : undefined;
+
+  const filterAttributes = filterFormAttributes(
+    nestedAttributes,
+    attributeComponents,
+    includeReservedAttributes
+  );
 
   if (!DisplayComponent)
     return (
       <WrappedComponent
         {...props}
         title={address?.[0] || ''}
-        attributes={nestedAttributes}
+        attributes={filterAttributes}
       />
     );
 
@@ -53,7 +62,7 @@ const nestedAttributesContainer = (WrappedComponent, props) => {
       <WrappedComponent
         {...props}
         title={address?.[0] || ''}
-        attributes={nestedAttributes}
+        attributes={filterAttributes}
       />
     </DisplayComponent>
   );
