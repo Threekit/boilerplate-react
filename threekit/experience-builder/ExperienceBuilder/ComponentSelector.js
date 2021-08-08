@@ -9,13 +9,8 @@ import {
 } from './experienceBuilder.styles';
 import { message } from 'antd';
 import experiences from '../experiences';
-import { ATTRIBUTE_TYPES } from '../../constants';
+import { ATTRIBUTE_TYPES, DISPLAY_OPTIONS } from '../../constants';
 import { componentOptions } from '../../react/components/InputComponents';
-
-const DISPLAY_OPTIONS = {
-  modal: 'modal',
-  drawer: 'drawer',
-};
 
 export const ComponentSelector = (props) => {
   const { creds, experience, item } = props;

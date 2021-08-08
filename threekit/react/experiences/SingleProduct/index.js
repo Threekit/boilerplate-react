@@ -8,18 +8,15 @@ import {
   Title,
   Description,
   Form,
-  SteppedForm,
 } from '../../components';
 import { selectAttribute, animateItem } from '../../../tools';
 
 const FORMS = {
   basic: 'basic',
-  stepped: 'stepped',
 };
 
 const formsComponents = {
   [FORMS.basic]: Form,
-  [FORMS.stepped]: SteppedForm,
 };
 
 export const SingleProductComponent = (props) => {
