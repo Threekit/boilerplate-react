@@ -3,8 +3,7 @@ import {
   setAllowInPlayerSelect,
   setNestedAttributeAddress,
 } from '../react/store/threekit';
-import { findHitNode } from './tools-utils';
-import { attrNameToRegExp } from '../utils';
+import { attrNameToRegExp, findHitNode } from '../utils';
 
 const selectOrdinalAttributes = (arrayLabel, config) => {
   const { active } = Object.assign({ active: true }, config);

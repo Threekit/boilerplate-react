@@ -1,5 +1,5 @@
 import { METADATA_RESERVED } from '../constants';
-import { easeInOutCubic, metadataKeyValueToObject } from './tools-utils';
+import { easeInOutCubic, metadataValueToObject } from '../utils';
 
 const animateItem = (config) => {
   const {
@@ -66,10 +66,8 @@ const animateItem = (config) => {
           if (translate) {
             translateDelta = Object.assign(
               { x: 0, y: 0, z: 0, duration },
-              metadataKeyValueToObject(translate?.defaultValue)
+              metadataValueToObject(translate?.defaultValue)
             );
-
-            console.log(translateDelta);
 
             originalPosition[nullId] = window.threekit.player.scene.get({
               id: nullId,
@@ -80,7 +78,7 @@ const animateItem = (config) => {
           if (rotate) {
             rotateDelta = Object.assign(
               { x: 0, y: 0, z: 0, duration },
-              metadataKeyValueToObject(rotate?.defaultValue)
+              metadataValueToObject(rotate?.defaultValue)
             );
 
             originalRotation[nullId] = window.threekit.player.scene.get({

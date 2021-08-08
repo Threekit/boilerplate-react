@@ -1,4 +1,3 @@
-import { filterAttributesArray } from '../utils';
 import store from '../react/store';
 import {
   moveItemWithinArray,
@@ -7,8 +6,7 @@ import {
 } from '../react/store/threekit';
 import { TK_PLAYER_DIV_ID } from '../constants';
 import theme from '../react/theme';
-import { findHitNode } from './tools-utils';
-import { attrNameToRegExp } from '../utils';
+import { filterAttributesArray, attrNameToRegExp, findHitNode } from '../utils';
 
 const classNames = {
   deleteBtn: 'threekit-delete-button-tool',
