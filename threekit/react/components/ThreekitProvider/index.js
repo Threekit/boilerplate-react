@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { launch } from '../../store/threekit';
-import store from '../../store';
+import createStore from '../../store';
 
 import { Provider } from 'react-redux';
 
@@ -43,7 +43,7 @@ const ThreekitProvider = (props) => {
     props.config
   );
   return (
-    <Provider store={store}>
+    <Provider store={createStore(props.reducers)}>
       <ThemeProvider theme={Object.assign(theme, config.theme)}>
         <App config={config}>{props.children}</App>
       </ThemeProvider>

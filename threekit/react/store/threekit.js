@@ -156,6 +156,10 @@ export const getNestedAttributes = (state) => state.threekit.nestedAttributes;
 export const getNestedAttributesAddress = (state) =>
   state.threekit.nestedAttributeAddress;
 
+//  Attribute Component
+export const getAllowInPlayerReorder = (state) =>
+  state.threekit.allowInPlayerReorder;
+
 /*****************************************************
  * Complex Selectors
  ****************************************************/

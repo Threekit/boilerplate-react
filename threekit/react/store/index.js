@@ -1,15 +1,20 @@
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import logger from 'redux-logger';
 
-import threekitReducer from './threekit';
+import threekit from './threekit';
 
-const store = configureStore({
-  reducer: {
-    threekit: threekitReducer,
-  },
-  middleware: getDefaultMiddleware({
-    serializableCheck: false,
-  }).concat(logger),
-});
+const createStore = (reducers) =>
+  configureStore({
+    reducer: Object.assign(
+      {},
+      {
+        threekit,
+      },
+      reducers
+    ),
+    middleware: getDefaultMiddleware({
+      serializableCheck: false,
+    }).concat(logger),
+  });
 
-export default store;
+export default createStore;
