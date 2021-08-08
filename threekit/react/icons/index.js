@@ -9,6 +9,7 @@ import SettingsOutlined from './SettingsOutlined';
 import DragOutlined from './DragOutlined';
 import GridBackground from './GridBackground';
 import MaterialsIcon from './MaterialsIcon';
+import CaretRightOutlined from './CaretRightOutlined';
 
 export {
   DragOutlined,
@@ -22,6 +23,7 @@ export {
   SettingsOutlined,
   GridBackground,
   MaterialsIcon,
+  CaretRightOutlined,
 };
 
 export default {
@@ -36,4 +38,5 @@ export default {
   settings: SettingsOutlined,
   gridBackground: GridBackground,
   materials: MaterialsIcon,
+  caretRight: CaretRightOutlined,
 };
