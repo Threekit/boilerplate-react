@@ -642,6 +642,27 @@ class Controller {
       return Object.assign(output, { [attr.name]: value });
     }, {});
   }
+
+  emailShareConfiguration(data) {
+    return new Promise(async (resolve) => {
+      if (!data || !data?.email) resolve();
+
+      const configuration =
+        data.configuration || window.threekit.configurator.getConfiguration();
+
+      const savedConfiguration = await this.saveConfiguration({
+        configuration,
+      });
+
+      const preppedData = Object.assign(
+        { resumableUrl: savedConfiguration.resumableUrl },
+        data
+      );
+
+      await threekitAPI.server.emailShare(preppedData);
+      resolve();
+    });
+  }
 }
 
 export default Controller;

@@ -4,7 +4,7 @@ export const ButtonWrapper = styled.div`
   height: ${(props) => props.theme.widgetSize};
   width: ${(props) =>
     props.showLabel ? 'max-content' : props.theme.widgetSize};
-  border: 1px solid grey;
+  border: 1px solid ${(props) => props.theme.textColorSecondary};
   cursor: pointer;
   padding: ${(props) => (props.showLabel ? '0 10px' : '0')};
   background: #ffffff55;
@@ -20,6 +20,14 @@ export const ButtonWrapper = styled.div`
   flex-direction: row;
   transition: all 0.2s;
 
+  .tk-icon.fill {
+    fill: ${(props) => props.theme.textColorSecondary};
+  }
+
+  .tk-icon.stroke {
+    stroke: ${(props) => props.theme.textColorSecondary};
+  }
+
   &:hover {
     border: 1px solid ${(props) => props.theme.primaryColor};
     color: ${(props) => props.theme.primaryColor};
@@ -31,6 +39,10 @@ export const ButtonWrapper = styled.div`
 
     .tk-icon.stroke {
       stroke: ${(props) => props.theme.primaryColor};
+    }
+
+    & > div:nth-child(2) {
+      color: ${(props) => props.theme.primaryColor};
     }
   }
 
@@ -54,10 +66,17 @@ export const ButtonWrapper = styled.div`
   & > div:nth-child(1) {
     font-size: 0px;
     width: max-content;
+    display: ${(props) => (props.showIcon === false ? 'none' : 'block')};
   }
+
   & > div:nth-child(2) {
     width: max-content;
-    padding-left: 6px;
+    color: ${(props) => props.theme.textColorSecondary};
+    padding-left: ${(props) =>
+      props.showLabel && [undefined, true].includes(props.showIcon)
+        ? '6px'
+        : '0px'};
+    transition: all 0.2s;
 
     display: ${(props) => (props.showLabel ? 'block' : 'none')};
   }

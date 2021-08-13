@@ -12,3 +12,14 @@ export const postSnapshot = (data) => {
     data,
   });
 };
+
+export const postEmailShare = (data) => {
+  let error;
+  if (!data) error = 'Requires Email Data';
+  if (error) return [undefined, { message: error }];
+  return serverRequest({
+    method: 'POST',
+    url: `${SERVER_API_ROUTE}/email`,
+    data,
+  });
+};

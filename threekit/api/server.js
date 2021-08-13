@@ -18,3 +18,14 @@ export const saveSnapshot = (data, filename) =>
     if (error) resolve([undefined, error]);
     resolve([fileResponse, undefined]);
   });
+
+export const emailShare = (data) =>
+  new Promise(async (resolve) => {
+    let message;
+    if (!data) message = 'Requires Data';
+    if (message) return [undefined, { message }];
+
+    const [response, error] = await http.server.postEmailShare(data);
+    if (error) resolve([undefined, error]);
+    resolve([response, undefined]);
+  });
