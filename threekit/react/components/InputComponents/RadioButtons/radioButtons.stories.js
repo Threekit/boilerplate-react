@@ -22,7 +22,7 @@ const options = [
 ];
 
 export default {
-  title: 'Input Components/RadioButtons',
+  title: 'Input Components/Radio Buttons',
   component: RadioButtons,
   argTypes: { handleClick: { action: 'clicked' } },
 };

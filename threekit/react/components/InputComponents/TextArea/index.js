@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Input } from './textInput.styles';
+import { Input } from './textArea.styles';
 import {
   InputComponentWrapper as Wrapper,
   InputComponentDescription as Description,
@@ -10,7 +10,7 @@ import { regularToKebabCase } from '../../../../utils';
 import { ATTRIBUTE_TYPES } from '../../../../constants';
 import defaultClassName, { classPrefix } from '../classNames';
 
-export const TextInput = (props) => {
+export const TextArea = (props) => {
   const {
     title,
     description,
@@ -18,15 +18,16 @@ export const TextInput = (props) => {
     className: classNameRaw,
     value,
     handleChange,
+    rows,
     isPlayerLoading,
     disabled,
   } = Object.assign({}, props);
 
-  let className = `${defaultClassName}-text-input`;
+  let className = `${defaultClassName}-text-area`;
   if (attribute) className += ` ${regularToKebabCase(attribute)}`;
   else if (title) className += ` ${regularToKebabCase(title)}`;
   if (classNameRaw) className += ` ${classNameRaw}`;
-  className += ` ${classPrefix}-text-input`;
+  className += ` ${classPrefix}`;
 
   return (
     <Wrapper className={`${className}-component`}>
@@ -37,7 +38,8 @@ export const TextInput = (props) => {
         </Description>
       ) : null}
       <Input
-        type="text"
+        rows={rows}
+        type="textarea"
         value={value}
         onChange={(e) => handleChange(e.target.value)}
         isPlayerLoading={isPlayerLoading}
@@ -47,15 +49,16 @@ export const TextInput = (props) => {
   );
 };
 
-TextInput.defaultProps = {
+TextArea.defaultProps = {
   attribute: undefined,
   title: undefined,
   className: undefined,
   value: undefined,
+  rows: 5,
   hideDisabled: undefined,
   handleChange: undefined,
 };
 
-TextInput.compatibleAttributes = new Set([ATTRIBUTE_TYPES.string]);
+TextArea.compatibleAttributes = new Set([ATTRIBUTE_TYPES.string]);
 
-export default TextInput;
+export default TextArea;

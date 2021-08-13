@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const Input = styled.input`
+export const Input = styled.textarea`
   width: 100%;
   margin: 0;
   padding: 4px 11px;
