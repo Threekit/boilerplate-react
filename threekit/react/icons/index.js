@@ -10,6 +10,9 @@ import DragOutlined from './DragOutlined';
 import GridBackground from './GridBackground';
 import MaterialsIcon from './MaterialsIcon';
 import CaretRightOutlined from './CaretRightOutlined';
+import HeartOutlined from './HeartOutlined';
+import WishlistOutlined from './WishlistOutlined';
+import CartOutlined from './CartOutlined';
 
 export {
   DragOutlined,
@@ -24,6 +27,9 @@ export {
   GridBackground,
   MaterialsIcon,
   CaretRightOutlined,
+  HeartOutlined,
+  WishlistOutlined,
+  CartOutlined,
 };
 
 export default {
@@ -39,4 +45,7 @@ export default {
   gridBackground: GridBackground,
   materials: MaterialsIcon,
   caretRight: CaretRightOutlined,
+  heart: HeartOutlined,
+  wishlist: WishlistOutlined,
+  cart: CartOutlined,
 };
