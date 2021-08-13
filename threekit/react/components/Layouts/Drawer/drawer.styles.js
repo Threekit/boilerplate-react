@@ -14,7 +14,7 @@ export const Background = styled.div`
 `;
 
 export const Wrapper = styled.div`
-  width: 400px;
+  min-width: 400px;
   height: 100vh;
   background: #fff;
   border-radius: ${(props) => props.theme.borderRadius};
