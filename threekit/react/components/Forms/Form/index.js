@@ -36,7 +36,7 @@ export const Form = (props) => {
       ) : null}
       {attributes.map((attr, i) => {
         let Component;
-        if (attr.name in attributeComponents) {
+        if (attr.name in (attributeComponents || {})) {
           Component = Object.entries(componentOptions[attr.type] || {}).find(
             ([key]) => key === attributeComponents[attr.name]?.toLowerCase()
           )?.[1];

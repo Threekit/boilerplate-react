@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useThreekitInitStatus } from '../../../hooks';
 import {
   DeleteButtonWrapper,
@@ -15,12 +15,13 @@ import {
   moveItemWithinArray,
   deleteItemFromArray,
   setAllowInPlayerReorder,
+  getAttributesArrayConfig,
 } from '../../../store/threekit';
-import store from '../../../store';
 
 const ReorderOrdinalAttribute = (props) => {
   const [showDelete, setShowDelete] = useState(false);
   const loaded = useThreekitInitStatus();
+  const attributesArrayConfig = useSelector(getAttributesArrayConfig);
   const dispatch = useDispatch();
   const deleteItem = useRef();
   const activeItemRef = useRef();
@@ -47,8 +48,7 @@ const ReorderOrdinalAttribute = (props) => {
       enabled: true,
       handlers: {
         mousedown: async (event) => {
-          const { threekit } = store.getState();
-          if (!threekit.allowInPlayerReorder) return;
+          if (!attributesArrayConfig.allowInPlayerReorder) return;
 
           const clickedAttribute = findHitNode(
             event.hitNodes,

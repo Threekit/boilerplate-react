@@ -36,8 +36,8 @@ const initialState = {
   //  Attributes State
   attributes: undefined,
   //  Ordinal Configurator
-  allowInPlayerReorder: false,
-  allowInPlayerSelect: false,
+  allowInPlayerReorder: true,
+  allowInPlayerSelect: true,
   activeAttribute: undefined,
   //  Nested Configurator
   nestedAttributeAddress: undefined,
@@ -159,6 +159,15 @@ export const getNestedAttributesAddress = (state) =>
 //  Attribute Component
 export const getAllowInPlayerReorder = (state) =>
   state.threekit.allowInPlayerReorder;
+
+// Array Attribute
+export const getAttributesArrayConfig = (state) => {
+  return {
+    allowInPlayerReorder: state.threekit.allowInPlayerReorder,
+    allowInPlayerSelect: state.threekit.allowInPlayerSelect,
+    activeAttribute: state.threekit.activeAttribute,
+  };
+};
 
 /*****************************************************
  * Complex Selectors

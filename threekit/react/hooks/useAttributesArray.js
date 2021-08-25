@@ -1,6 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux';
 import {
   getAttributesArray,
+  getAttributesArrayConfig,
   addItemToArray,
   deleteItemFromArray,
   moveItemWithinArray,
@@ -8,6 +9,7 @@ import {
 
 const useAttributesArray = (arrayLabel) => {
   const attributes = useSelector(getAttributesArray(arrayLabel));
+  const attributesArrayConfig = useSelector(getAttributesArrayConfig);
   const dispatch = useDispatch();
 
   if (!arrayLabel || !attributes || !Object.keys(attributes).length)
@@ -31,7 +33,7 @@ const useAttributesArray = (arrayLabel) => {
   const moveItem = (fromIdx, toIdx, config) =>
     dispatch(moveItemDispatcher(fromIdx, toIdx, config));
 
-  return [options, state, addItem, deleteItem, moveItem];
+  return [options, state, addItem, deleteItem, moveItem, attributesArrayConfig];
 };
 
 export default useAttributesArray;

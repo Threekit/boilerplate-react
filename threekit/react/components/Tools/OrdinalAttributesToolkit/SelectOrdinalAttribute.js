@@ -1,17 +1,18 @@
 import React, { useEffect, useRef } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useThreekitInitStatus } from '../../../hooks';
 import { attrNameToRegExp, findHitNode } from '../../../../utils';
 import { DISPLAY_OPTIONS } from '../../../../constants';
 import {
   setAllowInPlayerSelect,
   setNestedAttributeAddress,
+  getAttributesArrayConfig,
 } from '../../../store/threekit';
-import store from '../../../store';
 import { Form } from '../../Forms';
 
 const SelectOrdinalAttribute = (props) => {
   const loaded = useThreekitInitStatus();
+  const attributesArrayConfig = useSelector(getAttributesArrayConfig);
   const dispatch = useDispatch();
   // Attribute Array Handlers
   const attributesRegExp = useRef();
@@ -33,8 +34,7 @@ const SelectOrdinalAttribute = (props) => {
     enabled: true,
     handlers: {
       click: async (event) => {
-        const { threekit } = store.getState();
-        if (!threekit.allowInPlayerSelect) return;
+        if (!attributesArrayConfig.allowInPlayerSelect) return;
 
         const clickedAttribute = findHitNode(
           event.hitNodes,
