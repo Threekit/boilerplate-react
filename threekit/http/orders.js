@@ -2,7 +2,7 @@ import { threekitRequest } from './request';
 
 const ORDERS_API_ROUTE = '/api/orders';
 
-export const postOrder = (data) => {
+export const createOrder = (data) => {
   let error;
   if (!data) error = 'Requires Order Data';
   if (error) return [undefined, { message: error }];
@@ -13,25 +13,29 @@ export const postOrder = (data) => {
   });
 };
 
-export const fetchOrder = (id) => {
+export const addToOrder = (id, data) => {
   let error;
-  if (!id) error = 'Requires an Order ID / ShortID';
+  if (!data) error = 'Requires Order Data';
   if (error) return [undefined, { message: error }];
   return threekitRequest({
-    method: 'GET',
+    method: 'PUT',
     url: `${ORDERS_API_ROUTE}/${id}`,
-    params: { fullConfiguration: true },
+    data,
   });
 };
 
-export const queryOrder = (query) => {
-  let error;
-  if (!query) error = 'Get Order is missing query params';
-  if (error) return [undefined, { message: error }];
+export const getOrder = (id) => {
+  return threekitRequest({
+    method: 'GET',
+    url: `${ORDERS_API_ROUTE}/${id}`,
+  });
+};
+
+export const fetchOrders = () => {
   return threekitRequest({
     method: 'GET',
     url: ORDERS_API_ROUTE,
-    params: query,
+    includeOrgId: true,
   });
 };
 
