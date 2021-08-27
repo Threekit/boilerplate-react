@@ -14,7 +14,6 @@ export const Wrapper = styled.div`
   min-width: 400px;
   max-width: 100%;
   min-height: 200px;
-  background: #fff;
   opacity: 1;
   overflow: scroll;
 
