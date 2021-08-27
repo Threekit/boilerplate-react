@@ -312,7 +312,7 @@ export const filterFormAttributes = (
   attributeComponents,
   includeReservedAttributes
 ) => {
-  if (!attributes) return {};
+  if (!attributes) return [];
   if (
     (!attributeComponents || !Object.keys(attributeComponents).length) &&
     includeReservedAttributes
