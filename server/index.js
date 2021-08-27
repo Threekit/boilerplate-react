@@ -7,6 +7,7 @@ import connection from '../threekit/connection';
 import api from '../threekit/api';
 import paths from '../config/paths';
 import axios from 'axios';
+import twilio from 'twilio';
 
 //  ENV VARIABLES SETUP
 dotenv.config();
@@ -14,10 +15,12 @@ const argv = process.argv.slice(2);
 const portIdx =
   argv.indexOf('--port') !== -1 ? argv.indexOf('--port') : argv.indexOf('-p');
 
-export const PORT =
-  process.env.PORT || (portIdx > 0 ? argv[portIdx + 1] : 5000);
-export const EMAIL_TEMPLATE_ID = process.env.EMAIL_TEMPLATE_ID;
-export const EMAIL_API_KEY = process.env.EMAIL_API_KEY;
+const PORT = process.env.PORT || (portIdx > 0 ? argv[portIdx + 1] : 5000);
+const EMAIL_TEMPLATE_ID = process.env.EMAIL_TEMPLATE_ID;
+const EMAIL_API_KEY = process.env.EMAIL_API_KEY;
+const TWILIO_ACCOUNT_SID = process.env.TWILIO_ACCOUNT_SID;
+const TWILIO_AUTH_TOKEN = process.env.TWILIO_AUTH_TOKEN;
+const TWILIO_FROM_PHONE_NUMBER = process.env.TWILIO_FROM_PHONE_NUMBER;
 
 const threekitConfig = {
   authToken: process.env.THREEKIT_PRIVATE_TOKEN,
@@ -27,6 +30,7 @@ const threekitConfig = {
 };
 
 connection.connect(threekitConfig);
+const client = twilio(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN);
 
 const app = express();
 const upload = multer({ storage: multer.memoryStorage() });
@@ -60,7 +64,7 @@ app.post('/api/email', async (req, res) => {
   const data = req.body;
 
   const message = {
-    template_id: EMAIL_TEMPLATE_ID,
+    template_id: data.templateId || EMAIL_TEMPLATE_ID,
     from: { email: data.from || 'asaeed@threekit.com' },
     personalizations: [
       {
@@ -89,6 +93,27 @@ app.post('/api/email', async (req, res) => {
   } catch (e) {
     console.log(e);
     res.status(200).send(e);
+  }
+});
+
+app.post('/api/sms', async (req, res) => {
+  const { to, message } = req.body;
+
+  if (!to.length || !message.length)
+    return res.status(422).json({ message: 'incomplete request data' });
+
+  const data = {
+    from: TWILIO_FROM_PHONE_NUMBER,
+    to,
+    body: message,
+  };
+
+  try {
+    const smsResponse = await client.messages.create(data);
+    res.status(200).send(smsResponse);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send();
   }
 });
 
