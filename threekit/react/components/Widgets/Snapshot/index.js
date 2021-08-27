@@ -57,4 +57,7 @@ Snapshot.defaultProps = {
   format: SNAPSHOT_FORMATS.png,
 };
 
+Snapshot.Icon = DownloadOutlined;
+Snapshot.componentName = 'Download Snapshot';
+
 export default container(Snapshot);

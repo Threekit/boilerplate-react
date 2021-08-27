@@ -1,15 +1,15 @@
 import React from 'react';
 import 'antd/dist/antd.css';
 
-import { Zoom } from './index';
+import { ZoomComponent } from './index';
 
 export default {
   title: 'Widgets/Zoom',
-  component: Zoom,
+  component: ZoomComponent,
   //   argTypes: { handleClick: { action: 'clicked' } },
 };
 
-const Template = (args) => <Zoom {...args} />;
+const Template = (args) => <ZoomComponent {...args} />;
 
 export const Horizontal = Template.bind({});
 Horizontal.args = {};

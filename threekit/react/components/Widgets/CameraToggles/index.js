@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { ButtonWrapper, TwinButtonWrapper as Wrapper } from '../widgets.styles';
-import { CaretRightOutlined } from '../../../icons';
+import { CaretRightOutlined, CameraOutlined } from '../../../icons';
 import container from './cameraTogglesContainer';
 import defaultClassName from '../classNames';
 
-const CameraToggleLeft = (props) => {
+export const CameraToggleLeft = (props) => {
   const { handleToggleBackward, className: classNameRaw, showLabel } = props;
 
   let className = `${defaultClassName}-camera-toggle`;
@@ -24,7 +24,7 @@ const CameraToggleLeft = (props) => {
   );
 };
 
-const CameraToggleRight = (props) => {
+export const CameraToggleRight = (props) => {
   const { handleToggleForward, className: classNameRaw, showLabel } = props;
 
   let className = `${defaultClassName}-camera-toggles`;
@@ -39,6 +39,26 @@ const CameraToggleRight = (props) => {
       <div>
         <CaretRightOutlined />
       </div>
+    </ButtonWrapper>
+  );
+};
+
+export const CameraToggleSingle = (props) => {
+  const { handleClick, className: classNameRaw, showLabel } = props;
+
+  let className = `${defaultClassName}-camera-toggles`;
+  if (classNameRaw?.length) className += ` ${classNameRaw}`;
+
+  return (
+    <ButtonWrapper
+      showLabel={showLabel}
+      className={`${className} single-toggle`}
+      onClick={handleClick}
+    >
+      <div>
+        <CameraOutlined />
+      </div>
+      <div>Switch Camera</div>
     </ButtonWrapper>
   );
 };
@@ -65,6 +85,7 @@ export const CameraToggles = container(CameraToggles);
 
 CameraToggles.LeftToggle = container(CameraToggleLeft);
 CameraToggles.RightToggle = container(CameraToggleRight);
+CameraToggles.SingleToggle = container(CameraToggleSingle);
 
 CameraToggles.propTypes = {
   /**
@@ -81,5 +102,8 @@ CameraToggles.defaultProps = {
   handleClick: undefined,
   classname: '',
 };
+
+CameraTogglesComponent.Icon = CameraOutlined;
+CameraTogglesComponent.componentName = 'Camera Toggles';
 
 export default CameraToggles;

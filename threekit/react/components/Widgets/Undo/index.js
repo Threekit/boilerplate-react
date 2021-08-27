@@ -35,4 +35,7 @@ Undo.defaultProps = {
   classname: '',
 };
 
+Undo.Icon = UndoOutlined;
+Undo.componentName = 'Undo';
+
 export default container(Undo);

@@ -18,6 +18,7 @@ const cameraContainer = (WrappedComponent) => (props) => {
       {...props}
       handleToggleForward={handleToggleForward}
       handleToggleBackward={handleToggleBackward}
+      handleClick={handleToggleForward}
     />
   );
 };

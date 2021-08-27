@@ -35,4 +35,7 @@ Redo.defaultProps = {
   classname: '',
 };
 
+Redo.Icon = RedoOutlined;
+Redo.componentName = 'Redo';
+
 export default container(Redo);

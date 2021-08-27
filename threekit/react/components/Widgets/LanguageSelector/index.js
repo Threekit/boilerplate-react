@@ -2,6 +2,7 @@ import React from 'react';
 import container from './lanuageSelectorContainer';
 import { Dropdown } from '../../InputComponents/Dropdown';
 import { widgetPrefix } from '../classNames';
+import { ShareOutlined } from '../../../icons';
 
 export const LanguageSelector = ({ selected, options, handleChange }) => {
   if (!options) return null;
@@ -15,5 +16,8 @@ export const LanguageSelector = ({ selected, options, handleChange }) => {
     />
   );
 };
+
+LanguageSelector.componentName = 'Language Selector';
+LanguageSelector.Icon = ShareOutlined;
 
 export default container(LanguageSelector);

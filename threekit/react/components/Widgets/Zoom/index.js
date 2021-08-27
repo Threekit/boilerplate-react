@@ -108,4 +108,7 @@ Zoom.defaultProps = {
   className: '',
 };
 
+ZoomComponent.Icon = ZoomInOutlined;
+ZoomComponent.componentName = 'Zoom';
+
 export default Zoom;

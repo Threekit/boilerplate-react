@@ -41,4 +41,7 @@ Share.defaultProps = {
   classname: '',
 };
 
+Share.componentName = 'Share';
+Share.Icon = ShareOutlined;
+
 export default container(Share);
