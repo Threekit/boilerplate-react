@@ -93,9 +93,10 @@ export const SNAPSHOT_FORMATS = {
 };
 
 export const SNAPSHOT_OUTPUTS = {
-  data: 'data',
   url: 'url',
   download: 'download',
+  dataUrl: 'dataUrl',
+  blob: 'blob',
 };
 
 export const DISPLAY_OPTIONS = {

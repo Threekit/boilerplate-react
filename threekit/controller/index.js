@@ -43,6 +43,9 @@ class Controller {
     this._savedConfiguration;
     //  Pricebooks
     this._priceConfig = priceConfig;
+    //  Wishlist
+    this._wishlistId = undefined;
+    this._isWishlistCreated = undefined;
   }
 
   static createPlayerLoaderEl() {
@@ -56,6 +59,8 @@ class Controller {
     const playerLoader = document.createElement('div');
     playerLoader.appendChild(playerElement);
     playerLoader.style.opacity = '0';
+    playerLoader.style.position = 'fixed';
+    playerLoader.style.opacity = '-100%';
 
     document.body.appendChild(playerLoader);
     return playerElement;
@@ -445,7 +450,7 @@ class Controller {
 
   saveConfiguration(data = {}) {
     return new Promise(async (resolve) => {
-      if (this._savedConfiguration)
+      if (this._savedConfiguration && !data?.force)
         resolve(JSON.parse(this._savedConfiguration));
       const {
         configuration,
@@ -504,7 +509,7 @@ class Controller {
     return new Promise(async (resolve) => {
       try {
         const config = await Controller.getConfiguration(configurationId);
-        await this.setAttributesState(config.variant);
+        this.setAttributesState(config.variant);
         resolve();
       } catch (e) {
         throw new Error(e);
@@ -520,7 +525,7 @@ class Controller {
           size: { width: 1920, height: 1080 },
           format: SNAPSHOT_FORMATS.png,
           cameraAttribute: ATTRIBUTES_RESERVED.camera,
-          output: SNAPSHOT_OUTPUTS.data,
+          output: SNAPSHOT_OUTPUTS.blob,
         },
         config
       );
@@ -566,8 +571,13 @@ class Controller {
           });
           resolve();
           break;
-        case SNAPSHOT_OUTPUTS.data:
+        case SNAPSHOT_OUTPUTS.dataUrl:
+          const snapshotUrls = snapshots.map((snapshotBlob) =>
+            URL.createObjectURL(snapshotBlob)
+          );
+          resolve(snapshotUrls);
           break;
+        case SNAPSHOT_OUTPUTS.blob:
         default:
           resolve(snapshots);
           break;
@@ -643,24 +653,160 @@ class Controller {
     }, {});
   }
 
-  emailShareConfiguration(data) {
+  shareEmailConfiguration(data) {
     return new Promise(async (resolve) => {
       if (!data || !data?.email) resolve();
 
-      const configuration =
-        data.configuration || window.threekit.configurator.getConfiguration();
+      const promises = [this.saveConfiguration(data.configuration)];
 
-      const savedConfiguration = await this.saveConfiguration({
-        configuration,
-      });
+      if (data.cameras) {
+        promises.push(
+          this.takeSnapshots(data.cameras.length ? data.cameras : undefined, {
+            output: SNAPSHOT_OUTPUTS.url,
+          })
+        );
+      }
+
+      const [savedConfiguration, snapshots] = await Promise.all(promises);
 
       const preppedData = Object.assign(
         { resumableUrl: savedConfiguration.resumableUrl },
+        snapshots ? { snapshots } : {},
         data
       );
 
-      await threekitAPI.server.emailShare(preppedData);
+      await threekitAPI.server.shareEmail(preppedData);
       resolve();
+    });
+  }
+
+  shareSmsConfiguration(number, messageFunc) {
+    return new Promise(async (resolve) => {
+      if (!number?.length) resolve();
+
+      const savedConfiguration = await this.saveConfiguration();
+
+      const data = {
+        message: messageFunc
+          ? messageFunc(savedConfiguration.resumableUrl)
+          : `Click her to view your configuration: ${savedConfiguration.resumableUrl}`,
+        to: number,
+      };
+
+      await threekitAPI.server.shareSms(data);
+      resolve();
+    });
+  }
+
+  getUserWishlist(userId) {
+    return new Promise(async (resolve) => {
+      if (!userId) return resolve(undefined);
+
+      const [orders, error] = await threekitAPI.orders.fetchOrders({
+        _userId: userId,
+      });
+      if (error) resolve(undefined);
+
+      this._wishlistId = orders[0].shortId;
+
+      if (orders.length && !this._isWishlistCreated)
+        this._isWishlistCreated = true;
+      else {
+        this._isWishlistCreated = false;
+        resolve(undefined);
+      }
+
+      resolve(orders[0]);
+    });
+  }
+
+  addToUserWishlist(userId, config) {
+    return new Promise(async (resolve) => {
+      const {
+        configuration,
+        productVersion,
+        metadata,
+        snapshotCamera,
+      } = Object.assign({}, config);
+
+      let thumbnail;
+      if (snapshotCamera) {
+        [thumbnail] = await this.takeSnapshots(snapshotCamera, {
+          output: SNAPSHOT_OUTPUTS.url,
+        });
+      }
+
+      const configurationResponse = await this.saveConfiguration({
+        configuration,
+        productVersion: productVersion || 'v1',
+        thumbnail,
+        force: true,
+      });
+
+      if (!configurationResponse?.shortId) resolve(undefined);
+
+      let order;
+
+      if (!this._isWishlistCreated) {
+        const [newOrder, newOrderError] = await threekitAPI.orders.createOrder({
+          userId,
+          name: 'Wishlist',
+          cart: [
+            {
+              count: 1,
+              configurationId: configurationResponse.shortId,
+              metadata: Object.assign({ _thumbnail: thumbnail }, metadata),
+            },
+          ],
+        });
+        order = newOrder;
+      } else {
+        const [
+          existingOrder,
+          existingOrderError,
+        ] = await threekitAPI.orders.getOrder(this._wishlistId);
+        if (existingOrderError) resolve(undefined);
+
+        const [
+          updatedOrder,
+          updatedOrderError,
+        ] = await threekitAPI.orders.editOrder(this._wishlistId, {
+          cart: [
+            ...existingOrder.cart,
+            {
+              count: 1,
+              configurationId: configurationResponse.shortId,
+              metadata: Object.assign({ _thumbnail: thumbnail }, metadata),
+            },
+          ],
+        });
+        order = updatedOrder;
+      }
+      resolve(order);
+    });
+  }
+
+  deleteFromUserWishlist(configurationId) {
+    return new Promise(async (resolve) => {
+      const [
+        existingOrder,
+        existingOrderError,
+      ] = await threekitAPI.orders.getOrder(this._wishlistId);
+      if (existingOrderError) resolve(undefined);
+
+      const updatedCart = existingOrder.cart.filter(
+        (el) => el.configurationId !== configurationId
+      );
+
+      console.log(updatedCart);
+
+      const [
+        updatedOrder,
+        updatedOrderError,
+      ] = await threekitAPI.orders.editOrder(this._wishlistId, {
+        cart: updatedCart,
+      });
+      resolve(updatedOrder);
     });
   }
 }
