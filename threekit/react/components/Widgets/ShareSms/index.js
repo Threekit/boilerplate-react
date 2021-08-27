@@ -1,11 +1,11 @@
 import React from 'react';
-import WidgetButton from './ShareEmailButton';
-import ShareEmailForm from './ShareEmailForm';
+import WidgetButton from './ShareSmsButton';
+import ShareEmailForm from './ShareSmsForm';
 import { Modal } from '../../Layouts';
-import container from './shareEmailcontainer';
+import container from './shareSmsContainer';
 import { ShareOutlined } from '../../../icons';
 
-export const ShareEmail = (props) => {
+export const ShareSms = (props) => {
   const { onSend, show, setShow, showLabel } = Object.assign(
     { onSend: undefined, show: false, setShow: undefined },
     props
@@ -21,7 +21,7 @@ export const ShareEmail = (props) => {
   );
 };
 
-ShareEmail.componentName = 'Share Email';
-ShareEmail.Icon = ShareOutlined;
+ShareSms.componentName = 'Share Sms';
+ShareSms.Icon = ShareOutlined;
 
-export default container(ShareEmail);
+export default container(ShareSms);

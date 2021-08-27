@@ -11,7 +11,7 @@ import { ButtonWrapper } from '../../InputComponents/inputComponents.styles';
 import { TextInput } from '../../InputComponents/TextInput';
 import { TextArea } from '../../InputComponents/TextArea';
 
-export const EmailShareForm = (props) => {
+export const ShareEmailForm = (props) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
@@ -85,4 +85,4 @@ export const EmailShareForm = (props) => {
   );
 };
 
-export default EmailShareForm;
+export default ShareEmailForm;

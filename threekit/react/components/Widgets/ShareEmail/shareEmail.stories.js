@@ -1,25 +1,25 @@
 import React from 'react';
 import 'antd/dist/antd.css';
 
-import { EmailShareForm } from './EmailShareForm';
-import { EmailShareButton } from './EmailShareButton';
+import { ShareEmailForm } from './ShareEmailForm';
+import { ShareEmailButton } from './ShareEmailButton';
 
 export default {
   title: 'Widgets/ShareEmail',
-  component: EmailShareForm,
+  component: ShareEmailForm,
   //   argTypes: { handleClick: { action: 'clicked' } },
 };
 
-const TemplateEmailShareForm = (args) => <EmailShareForm {...args} />;
-const TemplateEmailShareButton = (args) => <EmailShareButton {...args} />;
+const TemplateShareEmailForm = (args) => <ShareEmailForm {...args} />;
+const TemplateShareEmailButton = (args) => <ShareEmailButton {...args} />;
 
-export const WidgetButton = TemplateEmailShareButton.bind({});
+export const WidgetButton = TemplateShareEmailButton.bind({});
 WidgetButton.args = {};
 
-export const DefaultForm = TemplateEmailShareForm.bind({});
+export const DefaultForm = TemplateShareEmailForm.bind({});
 DefaultForm.args = {};
 
-export const DetailedForm = TemplateEmailShareForm.bind({});
+export const DetailedForm = TemplateShareEmailForm.bind({});
 DetailedForm.args = {
   includeName: true,
   includeMessage: true,

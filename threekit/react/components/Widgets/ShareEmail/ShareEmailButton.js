@@ -3,7 +3,7 @@ import { ShareOutlined } from '../../../icons';
 import { ButtonWrapper } from '../widgets.styles';
 import defaultClassName from '../classNames';
 
-export const EmailShareButton = (props) => {
+export const ShareEmailButton = (props) => {
   const { handleClick, className: classNameRaw, showLabel } = props;
 
   let className = `${defaultClassName}-email-share`;
@@ -23,4 +23,4 @@ export const EmailShareButton = (props) => {
   );
 };
 
-export default EmailShareButton;
+export default ShareEmailButton;

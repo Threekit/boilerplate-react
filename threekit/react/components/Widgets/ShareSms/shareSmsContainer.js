@@ -2,19 +2,17 @@ import React, { useState } from 'react';
 import { message } from 'antd';
 import { useThreekitInitStatus } from '../../../hooks';
 
-export const shareEmailContainer = (WrappedComponent) => (props) => {
+const shareSmsContainer = (WrappedComponent) => (props) => {
   const hasLoaded = useThreekitInitStatus();
   const [show, setShow] = useState(false);
 
   if (!hasLoaded) return null;
 
-  const onSend = async (data) => {
-    const preppedData = Object.assign(
-      data,
-      props.from ? { from: props.from } : {}
-    );
-    await window.threekit.controller.shareEmailConfiguration(preppedData);
-    message.success('e-mail sent');
+  const { messageFunc } = Object.assign({ messageFunc: undefined }, props);
+
+  const onSend = async (number) => {
+    await window.threekit.controller.shareSmsConfiguration(number, messageFunc);
+    message.success('message sent');
     setShow(false);
   };
 
@@ -28,4 +26,4 @@ export const shareEmailContainer = (WrappedComponent) => (props) => {
   );
 };
 
-export default shareEmailContainer;
+export default shareSmsContainer;
