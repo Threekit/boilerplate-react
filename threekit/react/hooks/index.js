@@ -13,6 +13,7 @@ import usePlayerLoadingStatus from './usePlayerLoadingStatus';
 import usePrice from './usePrice';
 import useThreekitInitStatus from './useThreekitInitStatus';
 import useZoom from './useZoom';
+import useWishlist from './useWishlist';
 
 export {
   useAttribute,
@@ -30,4 +31,5 @@ export {
   usePrice,
   useThreekitInitStatus,
   useZoom,
+  useWishlist,
 };
