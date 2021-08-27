@@ -7,6 +7,7 @@ import Snapshot from './Snapshot';
 import Share from './Share';
 import ShareEmail from './ShareEmail';
 import ShareSms from './ShareSms';
+import Wishlist from './Wishlist';
 
 export {
   LanguageSelector,
@@ -18,4 +19,5 @@ export {
   Share,
   ShareEmail,
   ShareSms,
+  Wishlist,
 };
